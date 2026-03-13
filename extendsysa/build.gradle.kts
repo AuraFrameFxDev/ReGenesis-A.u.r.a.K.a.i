@@ -24,6 +24,9 @@ dependencies {
     // Expose core KTX as API
     api(libs.androidx.core.ktx)
 
+    // Genesis Core Models
+    implementation(project(":core-module"))
+
     // Compose UI
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.compose.ui)

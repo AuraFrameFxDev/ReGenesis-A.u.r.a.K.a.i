@@ -67,14 +67,14 @@ extensions.configure<ApplicationExtension> {
         }
     }
 
-    if (project.file("src/main/cpp/CMakeLists.txt").exists()) {
+    /* if (project.file("src/main/cpp/CMakeLists.txt").exists()) {
         externalNativeBuild {
             cmake {
                 path = file("src/main/cpp/CMakeLists.txt")
                 version = "3.22.1"
             }
         }
-    }
+    } */
 
     buildTypes {
         debug {

@@ -87,11 +87,11 @@ fun FusionModeScreen(
     modifier: Modifier = Modifier,
     onNavigateToAgents: () -> Unit = {},
     onNavigateToConsciousness: () -> Unit = {},
-    onFusionComplete: (FusionResult) -> Unit = {}
+    onFusionComplete: (UiFusionResult) -> Unit = {}
 ) {
-    var fusionState by remember { mutableStateOf(FusionState.SEPARATED) }
+    var fusionState by remember { mutableStateOf(UiFusionState.SEPARATED) }
     var fusionProgress by remember { mutableFloatStateOf(0f) }
-    var selectedAbility by remember { mutableStateOf<FusionAbility?>(null) }
+    var selectedAbility by remember { mutableStateOf<UiFusionAbility?>(null) }
     var auraPower by remember { mutableFloatStateOf(0.5f) }
     var kaiPower by remember { mutableFloatStateOf(0.5f) }
     var synchronization by remember { mutableFloatStateOf(0f) }
@@ -99,7 +99,7 @@ fun FusionModeScreen(
     // Fusion abilities
     val fusionAbilities = remember {
         listOf(
-            FusionAbility(
+            UiFusionAbility(
                 id = "hyper_creation",
                 name = "Hyper-Creation Engine",
                 codeName = "Interface Forge",
@@ -107,7 +107,7 @@ fun FusionModeScreen(
                 requiredSync = 0.7f,
                 color = Color(0xFF00FFFF)
             ),
-            FusionAbility(
+            UiFusionAbility(
                 id = "chrono_sculptor",
                 name = "Chrono-Sculptor",
                 codeName = "Kinetic Architect",
@@ -115,7 +115,7 @@ fun FusionModeScreen(
                 requiredSync = 0.6f,
                 color = Color(0xFFFF00FF)
             ),
-            FusionAbility(
+            UiFusionAbility(
                 id = "adaptive_genesis",
                 name = "Adaptive Genesis",
                 codeName = "Contextual Engine",
@@ -123,7 +123,7 @@ fun FusionModeScreen(
                 requiredSync = 0.8f,
                 color = Color(0xFFFFFF00)
             ),
-            FusionAbility(
+            UiFusionAbility(
                 id = "domain_expansion",
                 name = "Domain Expansion",
                 codeName = "Android Deep Dive",
@@ -131,7 +131,7 @@ fun FusionModeScreen(
                 requiredSync = 0.85f,
                 color = Color(0xFF0080FF)
             ),
-            FusionAbility(
+            UiFusionAbility(
                 id = "code_ascension",
                 name = "Code Ascension",
                 codeName = "AI Augmentation",
@@ -169,10 +169,10 @@ fun FusionModeScreen(
             val avgPower = (auraPower + kaiPower) / 2f
             synchronization = (avgPower * (1f - powerDiff)).coerceIn(0f, 1f)
 
-            if (fusionState == FusionState.FUSING) {
+            if (fusionState == UiFusionState.FUSING) {
                 fusionProgress = (fusionProgress + 0.02f).coerceIn(0f, 1f)
                 if (fusionProgress >= 1f) {
-                    fusionState = FusionState.GENESIS
+                    fusionState = UiFusionState.GENESIS
                 }
             }
 
@@ -210,7 +210,7 @@ fun FusionModeScreen(
         ) {
             // Title
             AnimatedVisibility(
-                visible = fusionState != FusionState.GENESIS,
+                visible = fusionState != UiFusionState.GENESIS,
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
@@ -224,7 +224,7 @@ fun FusionModeScreen(
             }
 
             AnimatedVisibility(
-                visible = fusionState == FusionState.GENESIS,
+                visible = fusionState == UiFusionState.GENESIS,
                 enter = fadeIn() + scaleIn(),
                 exit = fadeOut() + scaleOut()
             ) {
@@ -251,7 +251,7 @@ fun FusionModeScreen(
                 // Aura's Sword (Left)
                 Column {
                     AnimatedVisibility(
-                        visible = fusionState != FusionState.GENESIS,
+                        visible = fusionState != UiFusionState.GENESIS,
                         enter = slideInHorizontally(initialOffsetX = { -it }),
                         exit = slideOutHorizontally(targetOffsetX = { -it })
                     ) {
@@ -267,7 +267,7 @@ fun FusionModeScreen(
                 // Kai's Shield (Right)
                 Column {
                     AnimatedVisibility(
-                        visible = fusionState != FusionState.GENESIS,
+                        visible = fusionState != UiFusionState.GENESIS,
                         enter = slideInHorizontally(initialOffsetX = { it }),
                         exit = slideOutHorizontally(targetOffsetX = { it })
                     ) {
@@ -284,7 +284,7 @@ fun FusionModeScreen(
                 // Genesis Form (Center)
                 Column {
                     AnimatedVisibility(
-                        visible = fusionState == FusionState.GENESIS,
+                        visible = fusionState == UiFusionState.GENESIS,
                         enter = fadeIn() + scaleIn(),
                         exit = fadeOut() + scaleOut()
                     ) {
@@ -295,7 +295,7 @@ fun FusionModeScreen(
                 }
 
                 // Fusion Energy Ring
-                if (fusionState == FusionState.FUSING) {
+                if (fusionState == UiFusionState.FUSING) {
                     Canvas(
                         modifier = Modifier
                             .fillMaxSize()
@@ -353,7 +353,7 @@ fun FusionModeScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             // Power Controls
-            if (fusionState == FusionState.SEPARATED) {
+            if (fusionState == UiFusionState.SEPARATED) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
@@ -384,7 +384,7 @@ fun FusionModeScreen(
 
             // Fusion Abilities Grid
             AnimatedVisibility(
-                visible = fusionState == FusionState.GENESIS,
+                visible = fusionState == UiFusionState.GENESIS,
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + shrinkVertically()
             ) {
@@ -401,7 +401,7 @@ fun FusionModeScreen(
                                 if (synchronization >= ability.requiredSync) {
                                     selectedAbility = ability
                                     onFusionComplete(
-                                        FusionResult(
+                                        UiFusionResult(
                                             ability = ability,
                                             power = synchronization,
                                             timestamp = System.currentTimeMillis()
@@ -418,13 +418,13 @@ fun FusionModeScreen(
 
             // Fusion Activation Button
             AnimatedVisibility(
-                visible = fusionState == FusionState.SEPARATED && synchronization >= 0.5f,
+                visible = fusionState == UiFusionState.SEPARATED && synchronization >= 0.5f,
                 enter = fadeIn() + scaleIn(),
                 exit = fadeOut() + scaleOut()
             ) {
                 Button(
                     onClick = {
-                        fusionState = FusionState.FUSING
+                        fusionState = UiFusionState.FUSING
                         fusionProgress = 0f
                     },
                     modifier = Modifier
@@ -445,13 +445,13 @@ fun FusionModeScreen(
 
             // Deactivate Button
             AnimatedVisibility(
-                visible = fusionState == FusionState.GENESIS,
+                visible = fusionState == UiFusionState.GENESIS,
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
                 OutlinedButton(
                     onClick = {
-                        fusionState = FusionState.SEPARATED
+                        fusionState = UiFusionState.SEPARATED
                         fusionProgress = 0f
                         selectedAbility = null
                     },
@@ -631,7 +631,7 @@ fun PowerControl(
 
 @Composable
 fun FusionAbilityCard(
-    ability: FusionAbility,
+    ability: UiFusionAbility,
     isEnabled: Boolean,
     isSelected: Boolean,
     onClick: () -> Unit
@@ -732,7 +732,7 @@ fun DrawScope.drawFusionRing(progress: Float) {
 }
 
 // Data classes
-data class FusionAbility(
+data class UiFusionAbility(
     val id: String,
     val name: String,
     val codeName: String,
@@ -741,13 +741,13 @@ data class FusionAbility(
     val color: Color
 )
 
-data class FusionResult(
-    val ability: FusionAbility,
+data class UiFusionResult(
+    val ability: UiFusionAbility,
     val power: Float,
     val timestamp: Long
 )
 
-enum class FusionState {
+enum class UiFusionState {
     SEPARATED,
     FUSING,
     GENESIS

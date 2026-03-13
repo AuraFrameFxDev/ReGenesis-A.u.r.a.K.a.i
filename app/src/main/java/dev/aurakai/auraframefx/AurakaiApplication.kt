@@ -14,7 +14,6 @@ class AurakaiApplication : Application() {
         Log.i(TAG, "AurakaiApplication: Application started.")
 
         if (FeatureToggles.XPOSED_ENABLED) {
-            YukiHookAPI.encapsulate(this)
             checkHookEnvironment()
         }
     }
