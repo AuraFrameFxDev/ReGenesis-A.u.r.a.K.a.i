@@ -1,6 +1,6 @@
 package dev.aurakai.auraframefx.cascade
 
-import dev.aurakai.auraframefx.agent.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.agent.BaseAgent
 import dev.aurakai.auraframefx.agent.OrchestratableMessage
 import dev.aurakai.auraframefx.domains.genesis.core.OrchestratableAgent
