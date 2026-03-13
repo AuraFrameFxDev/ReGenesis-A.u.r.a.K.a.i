@@ -1,18 +1,13 @@
 ﻿package dev.aurakai.auraframefx.ai.agents
 
-import dev.aurakai.auraframefx.models.AgentResponse
-import dev.aurakai.auraframefx.models.AgentType
-import dev.aurakai.auraframefx.models.AiRequest
-import dev.aurakai.auraframefx.models.InteractionResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
+import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
+import dev.aurakai.auraframefx.domains.cascade.models.InteractionResponse
 import dev.aurakai.auraframefx.utils.toKotlinJsonObject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber
-
-private val AgentType.Companion.USER: Any
-    get() {
-        TODO()
-    }
 
 /**
  * Base implementation of the [Agent] interface. Subclasses should override
