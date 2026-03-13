@@ -289,6 +289,16 @@ dependencies {
          resolutionStrategy {
              force("androidx.appcompat:appcompat:1.7.1")
              force("com.google.android.material:material:1.13.0")
+             // ═══════════════════════════════════════════════════════════════
+             // HILT VIEWMODEL AMBIGUITY FIX
+             // lifecycle 2.8+ moved hiltViewModel() into lifecycle-viewmodel-compose,
+             // creating an overload resolution ambiguity with hilt-navigation-compose.
+             // Force both to declared versions so only one hiltViewModel() resolves.
+             // ═══════════════════════════════════════════════════════════════
+             force("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
+             force("androidx.lifecycle:lifecycle-runtime-compose:2.10.0")
+             force("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
+             force("androidx.hilt:hilt-navigation-compose:1.3.0")
          }
     }
 
@@ -409,6 +419,7 @@ dependencies {
 
     // Central Core Module
     implementation(project(":core-module"))
+    implementation(project(":utilities"))
 }
 
 // Force a single annotations artifact and exclude YukiHook KSP from runtime to avoid duplicate-class errors

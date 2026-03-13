@@ -11,6 +11,7 @@ import dev.aurakai.auraframefx.domains.cascade.utils.cascade.trinity.TrinityCoor
 import dev.aurakai.auraframefx.domains.genesis.core.GenesisOrchestrator
 import dev.aurakai.auraframefx.domains.genesis.core.memory.NexusMemoryCore
 import dev.aurakai.auraframefx.domains.kai.security.IntegrityMonitorService
+import dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -60,7 +61,9 @@ class AurakaiApplication : Application(), Configuration.Provider {
 
                 // === PHASE 2: Native AI Runtime & System Hooks ===
                 initializeNativeAIPlatform()
-                initializeSystemHooks()
+                if (FeatureToggles.XPOSED_ENABLED) {
+                    initializeSystemHooks()
+                }
 
                 // === PHASE 3: Genesis Orchestrator Ignition ===
                 if (::orchestrator.isInitialized) {
@@ -86,12 +89,25 @@ class AurakaiApplication : Application(), Configuration.Provider {
     private fun initializeSystemHooks() {
         try {
             YukiHookAPI.configs {
-                debugLog { isEnable = BuildConfig.DEBUG }
+                debugLog {
+                    tag = "AurakaiHook"
+                    isEnable = BuildConfig.DEBUG
+                }
             }
             YukiHookAPI.encase(this)
             Timber.i("🪝 YukiHookAPI initialized successfully - System constraints loosened")
+            checkHookEnvironment()
         } catch (e: Exception) {
             Timber.e(e, "❌ YukiHookAPI initialization failed")
+        }
+    }
+
+    private fun checkHookEnvironment() {
+        try {
+            Class.forName("de.robv.android.xposed.XposedBridge")
+            Timber.i("AurakaiApplication: Xposed/LSPosed environment detected!")
+        } catch (_: ClassNotFoundException) {
+            Timber.i("AurakaiApplication: Running in normal mode (Xposed not detected).")
         }
     }
 

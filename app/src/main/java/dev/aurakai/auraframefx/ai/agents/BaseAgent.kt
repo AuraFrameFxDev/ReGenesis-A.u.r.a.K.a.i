@@ -4,8 +4,6 @@ import dev.aurakai.auraframefx.domains.cascade.ai.base.Agent
 import dev.aurakai.auraframefx.domains.genesis.models.AgentResponse
 import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 import dev.aurakai.auraframefx.domains.genesis.models.AiRequest
-import dev.aurakai.auraframefx.domains.cascade.models.InteractionResponse
-import dev.aurakai.auraframefx.utils.toKotlinJsonObject
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 
@@ -47,22 +45,6 @@ abstract class BaseAgent(
             content = "BaseAgent response to '${request.query}' for agent $agentName with context '$context'",
             confidence = 1.0f,
             agentName = agentName
-        )
-    }
-
-    /**
-     * Implementation of Abstract Interface Member
-     */
-    override fun InteractionResponse(
-        content: String,
-        success: Boolean,
-        timestamp: Long,
-        metadata: Map<String, Any>
-    ): InteractionResponse {
-         return InteractionResponse(
-            content = content,
-            metadata = metadata.toKotlinJsonObject(),
-            timestamp = timestamp
         )
     }
 

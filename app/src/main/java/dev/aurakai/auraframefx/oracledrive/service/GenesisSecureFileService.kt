@@ -53,7 +53,7 @@ class GenesisSecureFileService @Inject constructor(
 
             // Encrypt data using Genesis crypto
             val encryptedData = withContext(Dispatchers.IO) {
-                cryptoManager.encrypt(data, getKeyAlias(fileName))
+                cryptoManager.encrypt(data)
             }
 
             val outputFile = File(targetDir, "$fileName$secureFileExtension")
@@ -68,7 +68,7 @@ class GenesisSecureFileService @Inject constructor(
                 size = data.size.toLong(),
                 lastModified = System.currentTimeMillis()
             )
-            secureStorage.storeMetadata(getMetadataKey(fileName), metadata)
+            secureStorage.store(getMetadataKey(fileName), metadata.toString())
 
             emit(FileOperationResult.Success(outputFile))
         } catch (e: Exception) {
@@ -106,7 +106,7 @@ class GenesisSecureFileService @Inject constructor(
             }
 
             // Decrypt data using Genesis crypto
-            val decryptedData = cryptoManager.decrypt(encryptedData, getKeyAlias(fileName))
+            val decryptedData = cryptoManager.decrypt(encryptedData)
             emit(FileOperationResult.Data(decryptedData, inputFile.nameWithoutExtension))
         } catch (e: Exception) {
             emit(FileOperationResult.Error("Failed to read file: ${e.message}", e))
@@ -134,8 +134,7 @@ class GenesisSecureFileService @Inject constructor(
 
             if (fileToDelete.delete()) {
                 // Clean up metadata and keys
-                secureStorage.removeMetadata(getMetadataKey(fileName))
-                cryptoManager.removeKey(getKeyAlias(fileName))
+                secureStorage.delete(getMetadataKey(fileName))
                 FileOperationResult.Success(fileToDelete)
             } else {
                 FileOperationResult.Error("Failed to delete file")

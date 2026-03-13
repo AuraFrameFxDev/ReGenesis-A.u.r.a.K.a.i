@@ -7,6 +7,7 @@ plugins {
     id("genesis.android.library.hilt")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.devtools.ksp")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 extensions.configure<LibraryExtension> {
@@ -26,4 +27,9 @@ extensions.configure<LibraryExtension> {
         sourceCompatibility = JavaVersion.VERSION_25
         targetCompatibility = JavaVersion.VERSION_25
     }
+}
+
+dependencies {
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.timber)
 }
