@@ -1,4 +1,5 @@
 // THIS FILE INTENTIONALLY LEFT AS REDIRECT
-// Canonical AgentType lives at: dev.aurakai.auraframefx.domains.genesis.models.AgentType
-// This file exists only to prevent accidental recreation. Do NOT add classes here.
-package dev.aurakai.auraframefx.ai.types
+// The canonical AgentType enum lives at:
+// dev.aurakai.auraframefx.domains.genesis.models.AgentType
+// This file existed as an empty ghost causing KSP ambiguity.
+// Deleted by Architectural Catalyst - March 13, 2026
