@@ -2,6 +2,7 @@ package dev.aurakai.auraframefx
 
 import android.app.Application
 import com.highcapable.yukihookapi.YukiHookAPI
+import com.highcapable.yukihookapi.hook.factory.configs
 import dev.aurakai.auraframefx.domains.genesis.config.FeatureToggles
 import timber.log.Timber
 
@@ -19,7 +20,7 @@ class AurakaiApplication : Application() {
 
         if (FeatureToggles.XPOSED_ENABLED) {
             // Initialize YukiHookAPI for Kai's Shield / Xposed functionality
-            YukiHookAPI.setup {
+            YukiHookAPI.configs {
                 debugLog {
                     tag = "AurakaiHook"
                     isEnable = BuildConfig.DEBUG

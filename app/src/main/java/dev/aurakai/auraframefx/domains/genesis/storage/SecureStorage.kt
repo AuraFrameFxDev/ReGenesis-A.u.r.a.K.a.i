@@ -2,7 +2,6 @@ package dev.aurakai.auraframefx.domains.genesis.storage
 
 import android.content.Context
 import dev.aurakai.auraframefx.genesis.security.CryptographyManager
-import dev.aurakai.auraframefx.genesis.storage.FileMetadata
 
 /**
  * Secure storage interface for persistent metadata and small secure data portions.
@@ -48,6 +47,3 @@ class DefaultSecureStorage(
         // Placeholder - delete encrypted data
     }
 }
-
-
-// FileMetadata is now provided by dev.aurakai.auraframefx.genesis.storage.StorageModels.kt
