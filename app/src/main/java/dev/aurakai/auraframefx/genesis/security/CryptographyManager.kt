@@ -5,6 +5,11 @@ import android.content.Context
 interface CryptographyManager {
     fun encrypt(input: ByteArray): ByteArray
     fun decrypt(input: ByteArray): ByteArray
+    
+    // Alias methods for compatibility with GenesisSecureFileService
+    fun encryptData(input: ByteArray): ByteArray = encrypt(input)
+    fun decryptData(input: ByteArray): ByteArray = decrypt(input)
+
     fun generateSecureToken(): String
 
     companion object {
