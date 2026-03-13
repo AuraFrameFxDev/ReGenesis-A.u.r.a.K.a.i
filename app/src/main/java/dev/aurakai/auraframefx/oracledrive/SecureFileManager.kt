@@ -2,6 +2,7 @@
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.aurakai.auraframefx.domains.kai.security.EncryptionManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -24,10 +25,6 @@ open class SecureFileManager @Inject constructor(
 ) {
     private val internalStorageDir: File = context.filesDir
     private val secureFileExtension = ".aes"
-    
-    companion object {
-        private const val DEFAULT_KEY_ALIAS = "oracle_drive_master_key"
-    }
 
     /**
      * Encrypts and saves data as a file in internal storage, emitting the operation result as a Flow.
@@ -52,7 +49,7 @@ open class SecureFileManager @Inject constructor(
             }
 
             val encryptedData = withContext(Dispatchers.IO) {
-                encryptionManager.encrypt(data, DEFAULT_KEY_ALIAS)
+                encryptionManager.encrypt(data)
             }
 
             val outputFile = File(targetDir, "$fileName$secureFileExtension")
@@ -96,7 +93,7 @@ open class SecureFileManager @Inject constructor(
                 }
             }
 
-            val decryptedData = encryptionManager.decrypt(encryptedData, DEFAULT_KEY_ALIAS)
+            val decryptedData = encryptionManager.decrypt(encryptedData)
             emit(FileOperationResult.Data(decryptedData, inputFile.nameWithoutExtension))
         } catch (e: Exception) {
             emit(FileOperationResult.Error("Failed to read file: ${e.message}", e))

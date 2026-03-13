@@ -2,7 +2,7 @@ package dev.aurakai.auraframefx.xposed.hooks
 
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.type.java.IntType
-import dev.aurakai.auraframefx.system.overlay.model.NotchBarConfig
+import dev.aurakai.auraframefx.domains.aura.models.NotchBarConfig
 
 /**
  * Xposed hooker for customizing the Android notch bar (status bar cutout area).

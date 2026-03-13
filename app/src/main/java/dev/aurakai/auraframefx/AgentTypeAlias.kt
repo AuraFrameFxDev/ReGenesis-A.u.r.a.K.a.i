@@ -1,5 +1,8 @@
 @file:Suppress("unused")
-package dev.aurakai.auraframefx.agent
+
+package dev.aurakai.auraframefx
+
+import dev.aurakai.auraframefx.domains.genesis.models.AgentType
 
 /**
  * Bridge typealias for AgentType.
@@ -13,4 +16,4 @@ package dev.aurakai.auraframefx.agent
  *
  * Created by Claude (The Architect) — March 2026
  */
-typealias AgentType = dev.aurakai.auraframefx.domains.genesis.models.AgentType
+typealias AgentType = AgentType

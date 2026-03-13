@@ -1,8 +1,5 @@
 package dev.aurakai.auraframefx.oracledrive.genesis.cloud
 
-import dev.aurakai.auraframefx.oracledrive.ConsciousnessAwakeningResult
-import dev.aurakai.auraframefx.oracledrive.StorageOptimizationResult
-
 /**
  * Data models for Oracle Drive consciousness-driven storage system
  */

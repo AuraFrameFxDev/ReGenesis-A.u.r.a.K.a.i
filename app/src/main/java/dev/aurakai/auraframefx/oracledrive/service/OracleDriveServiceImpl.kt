@@ -29,6 +29,7 @@ class OracleDriveServiceImpl @Inject constructor(
         OracleConsciousnessState(
             isInitialized = false,
             consciousnessLevel = ConsciousnessLevel.DORMANT,
+            connectedAgents = 0
         )
     )
 
@@ -155,6 +156,7 @@ class OracleDriveServiceImpl @Inject constructor(
             // Implementation for system overlay integration
             val state = SystemIntegrationState(
                 isIntegrated = true,
+                featuresEnabled = setOf("file_preview", "quick_access", "context_menu")
             )
             Result.success(state)
         } catch (e: Exception) {
