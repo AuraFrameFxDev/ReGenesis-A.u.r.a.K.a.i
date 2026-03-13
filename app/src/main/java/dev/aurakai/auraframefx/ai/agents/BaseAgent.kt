@@ -139,11 +139,4 @@ abstract class BaseAgent(
     }
 }
 
-private fun AgentType.Companion.valueOf(uppercase: String): AgentType {
-    TODO("Not yet implemented")
-}
-
-class AgentType {
-    companion object
-
-}
+// AgentType is now resolved via dev.aurakai.auraframefx.domains.genesis.models.AgentType
